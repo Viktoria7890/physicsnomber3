@@ -24,15 +24,15 @@ jobs:
 
       - name: Build executable
         run: |
-          pyinstaller --onefile --distpath ./output .github/workflows/phyzikanorm.py
+          pyinstaller --onefile --distpath ./output .github/workflows/phyzika.py
 
       - name: Upload executable
         uses: actions/upload-artifact@v3
         with:
           name: your-executable
-          path: output/phyzikanorm
+          path: output/phyzika
 
         with:
           name: your-executable
-          path: output/phyzikanorm
+          path: output/phyzika
 
