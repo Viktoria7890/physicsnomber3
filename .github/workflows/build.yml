@@ -11,11 +11,11 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      # Шаг 1: Клонирование репозитория
+      # Шаг 1: Клонирование репозитория (обновляем до Node.js 20)
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # обновлено до версии v4
 
-      # Шаг 2: Установка Python
+      # Шаг 2: Установка Python (обновляем до Node.js 20)
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -27,7 +27,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyinstaller
 
-      # Шаг 4: Сборка .exe файла
+      # Шаг 4: Сборка .exe файла (диагностика возможных ошибок сборки)
       - name: Build executable
         run: |
           pyinstaller --onefile --distpath ./output .github/workflows/phyzika.py
@@ -43,9 +43,9 @@ jobs:
             exit 1
           }
 
-      # Шаг 6: Загрузка собранного .exe файла как артефакта
+      # Шаг 6: Загрузка собранного .exe файла как артефакта (обновлено до версии v4)
       - name: Upload executable
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # обновлено до версии v4
         with:
           name: your-executable
           path: output/phyzika.exe
