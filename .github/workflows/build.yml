@@ -13,11 +13,11 @@ jobs:
     steps:
       # Шаг 1: Клонирование репозитория (обновляем до Node.js 20)
       - name: Checkout code
-        uses: actions/checkout@v4  # обновлено до версии v4
+        uses: actions/checkout@v4  # обновлено до v4
 
-      # Шаг 2: Установка Python (обновляем до Node.js 20)
+      # Шаг 2: Установка Python (обновлено)
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5  # обновлено до v5
         with:
           python-version: '3.x'
 
@@ -27,13 +27,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyinstaller
 
-      # Шаг 4: Сборка .exe файла (диагностика возможных ошибок сборки)
+      # Шаг 4: Сборка .exe файла с дополнительным выводом логов
       - name: Build executable
         run: |
           pyinstaller --onefile --distpath ./output .github/workflows/phyzika.py
         continue-on-error: false
 
-      # Шаг 5: Проверка наличия .exe файла с помощью PowerShell
+      # Шаг 5: Просмотр созданных файлов для диагностики
+      - name: List output directory
+        run: dir ./output
+
+      # Шаг 6: Проверка наличия .exe файла с помощью PowerShell
       - name: Check if EXE was created
         run: |
           if (Test-Path "./output/phyzika.exe") {
@@ -43,9 +47,9 @@ jobs:
             exit 1
           }
 
-      # Шаг 6: Загрузка собранного .exe файла как артефакта (обновлено до версии v4)
+      # Шаг 7: Загрузка собранного .exe файла как артефакта (обновлено до v4)
       - name: Upload executable
-        uses: actions/upload-artifact@v4  # обновлено до версии v4
+        uses: actions/upload-artifact@v4  # обновлено до v4
         with:
           name: your-executable
           path: output/phyzika.exe
