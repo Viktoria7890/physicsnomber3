@@ -27,17 +27,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyinstaller
 
-      # Шаг 4: Сборка .exe файла (используем новый файл `phyzika.py`)
+      # Шаг 4: Сборка .exe файла
       - name: Build executable
         run: |
           pyinstaller --onefile --distpath ./output .github/workflows/phyzika.py
-        # Вывод логов сборки для диагностики
         continue-on-error: false
 
-      # Шаг 5: Проверка наличия .exe файла
+      # Шаг 5: Проверка наличия .exe файла с помощью PowerShell
       - name: Check if EXE was created
         run: |
-          if [ -f "./output/phyzika.exe" ]; then echo "EXE file created successfully!"; else echo "EXE file not found!"; exit 1; fi
+          if (Test-Path "./output/phyzika.exe") {
+            Write-Host "EXE file created successfully!"
+          } else {
+            Write-Host "EXE file not found!"
+            exit 1
+          }
 
       # Шаг 6: Загрузка собранного .exe файла как артефакта
       - name: Upload executable
@@ -45,4 +49,3 @@ jobs:
         with:
           name: your-executable
           path: output/phyzika.exe
-
